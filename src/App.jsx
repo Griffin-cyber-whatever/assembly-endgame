@@ -3,142 +3,18 @@ import Confetti from "react-confetti";
 import { Input } from "./components/Input.jsx";
 import { Keyboard } from "./components/Keyboard.jsx";
 import { Status } from "./components/Status.jsx";
-
 import "./App.css";
+import {
+    generateRandomWord,
+    keycap_data,
+    initial_status,
+    KEY_STATUS,
+    LANGUAGE_NAMES,
+    GAME
+} from "./lib/constants.js"
 
-// Game state constants
-const GAME = {
-  UNFINISHED: "UNFINISHED",
-  WIN: "WIN",
-  LOSE: "LOSE",
-};
-
-// Language names array
-const LANGUAGE_NAMES = [
-  "HTML",
-  "CSS",
-  "Javascript",
-  "React",
-  "Typescript",
-  "Node.js",
-  "Python",
-  "Ruby",
-  "Assembly",
-];
-
-// Letter array for keyboard
-const LETTERS = [
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "H",
-  "I",
-  "J",
-  "K",
-  "L",
-  "M",
-  "N",
-  "O",
-  "P",
-  "Q",
-  "R",
-  "S",
-  "T",
-  "U",
-  "V",
-  "W",
-  "X",
-  "Y",
-  "Z",
-];
-
-// Key status options
-const KEY_STATUS = {
-  UNCLICKED: "unclicked",
-  CORRECT: "correct",
-  WRONG: "wrong",
-};
-
-const initial_status = LANGUAGE_NAMES.map((language, index) => ({
-  language,
-  isAlive: true,
-  id: index + 1,
-}));
-
-const keycap_data = LETTERS.map((letter, index) => ({
-  letter,
-  id: index + 1,
-  row: index < 10 ? 1 : index < 20 ? 2 : 3,
-  status: KEY_STATUS.UNCLICKED,
-}));
-
-const MAX_WORD_LENGTH = 8;
-const MIN_WORD_LENGTH = 5;
-
-// Function to generate a random word
-function generateRandomWord() {
-  const words = [
-
-    "CODING",
-
-    "PYTHON",
-
-    "JAVASCRIPT",
-
-    "REACT",
-
-    "NODEJS",
-
-    "GITHUB",
-
-    "ARRAY",
-
-    "OBJECT",
-
-    "FUNCTION",
-
-    "VARIABLE",
-
-    "LOOP",
-
-    "CLASS",
-
-    "METHOD",
-
-    "STRING",
-
-    "NUMBER",
-
-    "BOOLEAN",
-
-    "ASYNC",
-
-    "AWAIT",
-
-    "IMPORT",
-
-    "EXPORT",
-
-    "MODULE",
-
-    "COMPONENT",
-
-    "PROPS",
-
-    "STATE",
-
-  ];
-
-  const filteredWords = words.filter(
-    (word) => word.length >= MIN_WORD_LENGTH && word.length <= MAX_WORD_LENGTH
-  );
-
-  return filteredWords[Math.floor(Math.random() * filteredWords.length)];
-}
+export const MAX_WORD_LENGTH = 8;
+export const MIN_WORD_LENGTH = 5;
 
 function App() {
   const [target, setTarget] = useState(() => generateRandomWord());
@@ -174,15 +50,6 @@ function App() {
     );
   };
 
-  // Helper function to find the next position where a letter should be placed
-  function findNextLetterPosition(target, letter, currentInput) {
-    for (let i = 0; i < target.length; i++) {
-      if (target[i] === letter && currentInput[i] === "_") {
-        return i;
-      }
-    }
-    return -1;
-  }
 
   function eliminate_language() {
     for (const languageObj of status) {
